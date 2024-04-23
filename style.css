@@ -1,0 +1,11 @@
+.spaced-input {
+    margin-bottom: 10px; 
+}
+
+.bordered-content {
+    border: 1px solid #ccc; 
+    padding: 20px; 
+    border-radius: 5px;
+    background-color: #f7f6f6;
+}
+
