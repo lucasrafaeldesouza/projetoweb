@@ -1,7 +1,7 @@
 <?php 
     include_once ('viacep.php');
     include_once ('dbconfig.php');
-    $address = buscaEndereco();
+    $endereco = buscaEndereco();
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +12,9 @@
     <title>Projeto Web</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
 <body>
     <div class="container mt-5"> 
@@ -21,7 +24,7 @@
                     <p>Digite o CEP para encontrar o endereço</p>
                     <div class="row">
                         <div class="col-md-10">
-                            <input class="form-control spaced-input" type="text" placeholder="Digite um cep..." name="cep" value="<?php echo $address->cep ?>">
+                            <input class="form-control spaced-input" type="text" placeholder="Digite um cep..." name="cep" value="<?php echo $endereco->cep ?>">
                         </div>
                         <div class="col-md-2" style="display: flex; justify-content: end;">
                             <button class="btn btn-primary spaced-input" type="submit">Buscar</button>
@@ -32,21 +35,21 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="">Cidade</label>
-                            <input class="form-control spaced-input" type="text" placeholder="cidade" name="cidade" value="<?php echo $address->localidade ?>"> 
+                            <input class="form-control spaced-input" type="text" placeholder="cidade" name="cidade" value="<?php echo $endereco->localidade ?>"> 
                         </div>
                         <div class="col-md-6">
                             <label for="">Bairro</label>
-                            <input class="form-control spaced-input" type="text" placeholder="bairro" name="bairro" value="<?php echo $address->bairro ?>">
+                            <input class="form-control spaced-input" type="text" placeholder="bairro" name="bairro" value="<?php echo $endereco->bairro ?>">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-10">
                             <label for="">Rua</label>
-                            <input class="form-control spaced-input" type="text" placeholder="rua" name="rua" value="<?php echo $address->logradouro ?>" >
+                            <input class="form-control spaced-input" type="text" placeholder="rua" name="rua" value="<?php echo $endereco->logradouro ?>" >
                         </div>
                         <div class="col-md-2">
                             <label for="">UF</label>
-                            <input class="form-control spaced-input" type="text" placeholder="estado" name="estado" value="<?php echo $address->uf ?>">
+                            <input class="form-control spaced-input" type="text" placeholder="estado" name="estado" value="<?php echo $endereco->uf ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -60,7 +63,7 @@
     </div>
     
 <div class="container mt-5">  
-    <table class="table">
+    <table class="table" id="tabela">
         <thead>
             <tr>
                 <th scope="col">CEP</th>
@@ -90,6 +93,12 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#tabela').DataTable();
+    });
+</script>
 
 </body>
 </html> 

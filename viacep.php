@@ -43,19 +43,19 @@ function buscaEndereco() {
         $cep = filterCep($cep);
 
         if(isCep($cep)) {
-            $address = buscaEnderecoViaCep($cep);
-            if(property_exists($address, 'erro')) {
-                $address = enderecoEmpty();
-                $address->cep = 'CEP Não encontrado';
+            $endereco = buscaEnderecoViaCep($cep);
+            if(property_exists($endereco, 'erro')) {
+                $endereco = enderecoEmpty();
+                $endereco->cep = 'CEP Não encontrado';
             }
         } else {
-            $address = enderecoEmpty();
-            $address->cep = 'CEP Inválido';
+            $endereco = enderecoEmpty();
+            $endereco->cep = 'CEP Inválido';
         }
     } else {
-        $address = enderecoEmpty();
+        $endereco = enderecoEmpty();
     }
-    return $address;
+    return $endereco;
 }
 
 function enderecoEmpty() {
