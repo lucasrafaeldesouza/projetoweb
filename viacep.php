@@ -1,4 +1,29 @@
 <?php 
+require_once 'dbconfig.php';
+
+if (isset($_POST['salvar_endereco'])) {
+    $cep = mysqli_escape_string($connect, $_POST['cep']);
+    $cidade = mysqli_escape_string($connect, $_POST['cidade']);
+    $bairro = mysqli_escape_string($connect, $_POST['bairro']);
+    $rua = mysqli_escape_string($connect, $_POST['rua']);
+    $estado = mysqli_escape_string($connect, $_POST['estado']);
+
+    if (isCep($cep)) {
+        $sql = "INSERT INTO endereco (cep, cidade, bairro, rua, estado) 
+                VALUES ('$cep', '$cidade', '$bairro' ,'$rua', '$estado')";
+
+        if (mysqli_query($connect, $sql)) {
+            $_SESSION['mensagem'] = "Cadastrado com sucesso";
+            header('Location: ../projetoweb');
+        } else {
+            $_SESSION['mensagem'] = "Erro ao cadastrar";      
+            header('Location: .../index.php');
+        }
+    } else {
+        $_SESSION['mensagem'] = "CEP não pode estar vazio";      
+        header('Location: ../projetoweb');
+    }
+}
 
 function buscaEndereco() {
     

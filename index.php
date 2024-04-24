@@ -1,5 +1,6 @@
 <?php 
     include_once ('viacep.php');
+    include_once ('dbconfig.php');
     $address = buscaEndereco();
 ?>
 
@@ -48,9 +49,47 @@
                             <input class="form-control spaced-input" type="text" placeholder="estado" name="estado" value="<?php echo $address->uf ?>">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success" name="salvar_endereco">Salvar endereço</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
+    
+    <div class="container mt-5">  
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">CEP</th>
+                <th scope="col">Cidade</th>
+                <th scope="col">Bairro</th>
+                <th scope="col">Rua</th>
+                <th scope="col">UF</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $sql = "SELECT * FROM endereco";
+            $resultado = mysqli_query($connect, $sql);
+            $dados_endereco = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+            foreach ($dados_endereco as $dados) {
+            ?>
+                <tr>
+                    <td><?php echo $dados['cep']; ?></td>
+                    <td><?php echo $dados['cidade']; ?></td>
+                    <td><?php echo $dados['bairro']; ?></td>
+                    <td><?php echo $dados['rua']; ?></td>
+                    <td><?php echo $dados['estado']; ?></td>
+                </tr>
+            <?php
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+
 </body>
-</html>
+</html> 
