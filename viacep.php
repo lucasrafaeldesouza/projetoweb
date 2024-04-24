@@ -8,6 +8,16 @@ if (isset($_POST['salvar_endereco'])) {
     $rua = mysqli_escape_string($connect, $_POST['rua']);
     $estado = mysqli_escape_string($connect, $_POST['estado']);
 
+    // Consulta para verificar se o CEP já existe no banco de dados
+    $consulta_sql = "SELECT * FROM endereco WHERE cep = '$cep'";
+    $resultado = mysqli_query($connect, $consulta_sql);
+
+    if (mysqli_num_rows($resultado) > 0) {
+        $_SESSION['mensagem'] = "CEP já cadastrado";
+        header('Location: ../projetoweb');
+        exit();
+    }
+
     if (isCep($cep)) {
         $sql = "INSERT INTO endereco (cep, cidade, bairro, rua, estado) 
                 VALUES ('$cep', '$cidade', '$bairro' ,'$rua', '$estado')";
@@ -20,7 +30,7 @@ if (isset($_POST['salvar_endereco'])) {
             header('Location: .../index.php');
         }
     } else {
-        $_SESSION['mensagem'] = "CEP não pode estar vazio";      
+        $_SESSION['mensagem'] = "CEP inválido";      
         header('Location: ../projetoweb');
     }
 }
@@ -70,6 +80,3 @@ function buscaEnderecoViaCep(String $cep) {
     $url = "https://viacep.com.br/ws/{$cep}/json/";
     return json_decode(file_get_contents($url));
 }
-
-
-
